@@ -2,7 +2,10 @@ const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
 const combineReducers = redux.combineReducers
+const applyMiddleWare = redux.applyMiddleware
 
+const reduxLogger = require('redux-logger')
+const logger = reduxLogger.createLogger()
 
 
 //ACTIONS
@@ -114,7 +117,7 @@ const rootReducer = combineReducers({
 // passing the reducer to create is required to make the state transitions based on the actions received
 // this is the first responsibility holding the app state
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleWare(logger))
 
 // the second responsibility is to expose the getState method
 // getState gives the current state in the store 
@@ -125,9 +128,7 @@ console.log('initial state', store.getState());
 // this is achieved using the subscribe method
 // the subscribe method accept a function
 
-const unscribe =  store.subscribe(() => {
-    console.log('updated state', store.getState());
-})
+const unscribe =  store.subscribe(() => {})
 
 
 // 3rd responsibility
